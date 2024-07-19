@@ -76,11 +76,11 @@ with open(r'pkls/boxcox_lambdas.pkl', 'rb') as f:
     lambda_dict = pickle.load(f)
 
     
-with open(r'pkls/pkls\\scale_reg.pkl', 'rb') as f:
+with open(r'pkls/scale_reg.pkl', 'rb') as f:
     scale_reg = pickle.load(f)
 
 with open(r'pkls/XGB_model.pkl', 'rb') as f:
-    xgb_Reg = pickle.load(f)
+    XGB_model = pickle.load(f)
     
 
 
@@ -185,6 +185,7 @@ if selected == "Genie":
     # floor=floor_mapping[floor] if floor is not None else None
     floor_level=floor_level_mapping[floor_level] if floor_level is not None else None
     remaining_lease_year=remaining_lease_year_mapping[remaining_lease_year] if remaining_lease_year is not None else None
+    location_specifics = 
     
     data = np.array([[floor_area_box,town, year, flat_type, flat_model,lease_year,floor,floor_level,remaining_lease_year]])
     st.write(data)
@@ -195,7 +196,7 @@ if selected == "Genie":
         
         scaled_data = scale_reg.transform(data)
         st.write(scaled_data)
-        prediction = xgb_Reg.predict(scaled_data)
+        prediction = XGB_model.predict(scaled_data)
         st.write(prediction)
         lambda_val = lambda_dict['resale_price_lambda'] 
         transformed_predict=reverse_boxcox_transform(prediction, lambda_val) if data is not None else None
