@@ -164,12 +164,12 @@ if selected == "Genie":
     year_mapping = {1990: 1, 1991: 2, 1992: 3, 1993: 4, 1994: 5, 1995: 6, 2002: 7, 2003: 8, 2004: 9, 2001: 10, 2005: 11, 2006: 12, 1999: 13, 2000: 14, 1998: 15, 1996: 16, 2007: 17, 1997: 18, 2008: 19, 2009: 20, 2010: 21, 2019: 22, 2015: 23, 2018: 24, 2011: 25, 2016: 26, 2017: 27, 2014: 28, 2020: 29, 2012: 30, 2013: 31, 2021: 32, 2022: 33, 2023: 34, 2024: 35}
     flat_type_mapping = {'1 Room': 1, '2 Room': 2, '3 Room': 3, '4 Room': 4, '5 Room': 5, 'Executive': 6, 'Multi Generation': 7}
     flat_model_mapping={'New Generation': 1, 'Standard': 2, 'Simplified': 3, 'Model A2': 4, '2-Room': 5, 'Model A': 6, 'Improved': 7, 'Improved-Maisonette': 8, 'Model A-Maisonette': 9, 'Premium Apartment': 10, 'Adjoined Flat': 11, 'Maisonette': 12, 'Apartment': 13, 'Terrace': 14, 'Multi Generation': 15, 'Premium Maisonette': 16, '3Gen': 17, 'Dbss': 18, 'Premium Apartment Loft': 19, 'Type S1': 20, 'Type S2': 21}
-    lease_year_mapping={1969: 1, 1971: 2, 1967: 3, 1968: 4, 1973: 5, 1970: 6, 1972: 7, 1974: 8, 1977: 9, 1980: 10, 1983: 11, 1975: 12, 1981: 13, 1976: 14, 1978: 15, 1979: 16, 1966: 17, 1982: 18, 1985: 19, 1984: 20, 1986: 21, 1987: 22, 1988: 23, 1990: 24, 1989: 25, 1991: 26, 1997: 27, 1998: 28, 1996: 29, 1999: 30, 1994: 31, 1993: 32, 2000: 33, 1995: 34, 1992: 35, 2001: 36, 2002: 37, 2003: 38, 2004: 39, 2012: 40, 2014: 41, 2015: 42, 2005: 43, 2007: 44, 2010: 45, 2013: 46, 2008: 47, 2016: 48, 2009: 49, 2017: 50, 2018: 51, 2019: 52, 2006: 53, 2020: 54, 2011: 55}
+    #lease_year_mapping={1969: 1, 1971: 2, 1967: 3, 1968: 4, 1973: 5, 1970: 6, 1972: 7, 1974: 8, 1977: 9, 1980: 10, 1983: 11, 1975: 12, 1981: 13, 1976: 14, 1978: 15, 1979: 16, 1966: 17, 1982: 18, 1985: 19, 1984: 20, 1986: 21, 1987: 22, 1988: 23, 1990: 24, 1989: 25, 1991: 26, 1997: 27, 1998: 28, 1996: 29, 1999: 30, 1994: 31, 1993: 32, 2000: 33, 1995: 34, 1992: 35, 2001: 36, 2002: 37, 2003: 38, 2004: 39, 2012: 40, 2014: 41, 2015: 42, 2005: 43, 2007: 44, 2010: 45, 2013: 46, 2008: 47, 2016: 48, 2009: 49, 2017: 50, 2018: 51, 2019: 52, 2006: 53, 2020: 54, 2011: 55}
     # floor_mapping={1:0,2:.5,3: 1,4:1.5, 5: 2,6:2.5}
     floor_level_mapping={3: 1, 6: 2, 9: 3, 12: 4, 15: 5, 5: 6, 18: 7, 10: 8, 21: 9, 24: 10, 20: 11, 27: 12, 25: 13, 35: 14, 40: 15, 30: 16, 33: 17, 36: 18, 39: 19, 42: 20, 45: 21, 48: 22, 51: 23}
     remaining_lease_year_mapping = {81: 1, 82: 2, 83: 3, 80: 4, 79: 5, 84: 6, 78: 7, 85: 8, 77: 9, 76: 10, 86: 11, 75: 12, 87: 13, 88: 14, 48: 15, 74: 16, 89: 17, 49: 18, 90: 19, 47: 20, 72: 21, 73: 22, 71: 23, 45: 24, 46: 25, 70: 26, 91: 27, 44: 28, 43: 29, 50: 30, 69: 31, 92: 32, 93: 33, 68: 34, 41: 35, 42: 36, 51: 37, 67: 38, 96: 39, 52: 40, 58: 41, 66: 42, 94: 43, 59: 44, 95: 45, 57: 46, 100: 47, 65: 48, 101: 49, 53: 50, 56: 51, 64: 52, 54: 53, 55: 54, 98: 55, 60: 56, 63: 57, 62: 58, 61: 59, 97: 60, 99: 61}
-
-
+    town_median_list = {1: 9.323219299316406,2: 9.260793685913086,3: 9.80174732208252,4: 10.193489074707031,5: 9.80174732208252,6: 10.354616165161133,7: 10.716485977172852,8: 10.615007400512695,9: 9.446247100830078,10: 10.866004943847656,11: 9.446247100830078,12: 11.342947006225586,13: 9.859149932861328,14: 11.29664134979248,15: 11.203139305114746,16: 10.963958740234375,17: 9.916055679321289,18: 9.916055679321289,19: 11.29664134979248,20: 11.342947006225586,21: 11.525309562683105,22: 11.250040054321289,23: 12.172235488891602,24: 11.388961791992188,25: 11.342947006225586,26: 11.203139305114746,27: 10.91515064239502}
+    
 
     
 
@@ -181,13 +181,24 @@ if selected == "Genie":
     year=year_mapping[date.today().year]
     flat_type=flat_type_mapping[flat_type] if flat_type is not None else None
     flat_model=flat_model_mapping[flat_model] if flat_model is not None else None
-    lease_year=lease_year_mapping[lease_year] if lease_year is not None else None
+   # lease_year=lease_year_mapping[lease_year] if lease_year is not None else None
     # floor=floor_mapping[floor] if floor is not None else None
     floor_level=floor_level_mapping[floor_level] if floor_level is not None else None
     remaining_lease_year=remaining_lease_year_mapping[remaining_lease_year] if remaining_lease_year is not None else None
-    location_specifics = 
     
-    data = np.array([[floor_area_box,town, year, flat_type, flat_model,lease_year,floor,floor_level,remaining_lease_year]])
+    
+    location_specifics = floor_area_box * town if None not in (floor_area_box, town) else None
+    #floor_area_year = floor_area_box / remaining_lease_year
+    st.write(lease_year)
+    age = year - lease_year if None not in (year, lease_year) else None
+    flat_area = flat_type * floor_area_box if None not in (flat_type, floor_area_box) else None
+    model_area = flat_model * floor_area_box if None not in (flat_model, floor_area_box) else None
+    town_mean_price = town_median_list[town] if None not in (town, town_median_list) else None
+    floor_area_age = floor_area_box / (2024 - lease_year) if None not in (floor_area_box, lease_year) else None
+    floor_weightage = (floor_level -  floor ) * floor_area_box if None not in (floor_level, floor) else None
+
+    
+    data = np.array([[lease_year,floor,year,floor_area_box,town, flat_type, flat_model,remaining_lease_year,location_specifics,age,flat_area,model_area,town_mean_price,floor_area_age,floor_weightage]])
     st.write(data)
     
     
