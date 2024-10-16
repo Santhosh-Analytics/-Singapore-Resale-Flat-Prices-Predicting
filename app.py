@@ -20,6 +20,34 @@ st.set_page_config(
 )
 
 
+# Injecting HTML for custom styling
+
+st.markdown(
+    """
+    <style>
+    .custom-info-box {
+        background-color: rgba(61, 157, 243, 0.2) !important;  /* Background color similar to st.info */
+        padding: 10px;  /* Add some padding for spacing */
+        border-left: 10px solid #1E88E5;  /* Add a colored border on the left */
+        border-right: 0px solid #1E88E5;
+        border-up: 10px solid #1E88E5;
+        border-down: 10px solid #1E88E5;
+        border-radius: 20px;  /* Rounded corners */
+        font-family: Arial, sans-serif;  /* Font styling */
+        font-size: 18px;  /* Font size adjustment */
+        color: #ffffff;  /* Font color */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+texts = """
+<div class="custom-info-box">
+    <strong>Information:</strong> Please update flat information to proceed.
+</div>
+"""
+
 # Injecting CSS for custom styling
 st.markdown("""
     <style>
@@ -43,20 +71,28 @@ st.markdown("""
     /* Button */
     .stButton>button {
         font-size: 22px;
-        background-color: #4CAF50;
+        background-color: darkgreen;
         color: white;
-        border: none;
+        border: single;
+        border-width: 5px;
+        border-color: #3e8e41;
         padding: 10px 20px;
         text-align: center;
-        text-decoration: none;
+        text-decoration: text-overflow;
         display: inline-block;
         margin: 4px 2px;
         cursor: pointer;
-        border-radius: 16px;
+        border-radius: 22px;
     }
     .stButton>button:hover {
-        background-color: #3e8e41;
-        color: white;
+        background-color: forestgreen !important;
+        color: white !important;
+        border: signle !important;
+        border-width: 5px !important;
+        border-color: Darkgreen !important;
+        font-size: 22px !important;
+        text-decoration: text-overflow !important;
+        transition: width 2s !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -93,10 +129,10 @@ with st.sidebar:
         menu_icon="cast", 
         default_index=0,
         styles={
-            "container": {"padding": "0!important", "background-color": "gray"},
-            "icon": {"color": "#000000", "font-size": "25px", "font-family": "Times New Roman"},
+            "container": {"padding": "0!important", "background-color": "#04AA6D"},
+            "icon": {"color": "Coral", "font-size": "25px", "font-family": "Times New Roman"},
             "nav-link": {"font-family": "inherit", "font-size": "22px", "color": "#ffffff", "text-align": "left", "margin": "0px", "--hover-color": "#84706E"},
-            "nav-link-selected": {"font-family": "inherit", "background-color": "#ffffff", "color": "#55ACEE", "font-size": "25px"},
+            "nav-link-selected": {"font-family": "inherit", "background-color": "saddlebrown", "color": "black", "font-size": "25px"},
         }
     )
     st.markdown("<hr style='border: 2px solid #ffffff;'>", unsafe_allow_html=True)
@@ -145,17 +181,31 @@ if selected == "Genie":
 
     with col2:
 
-        floor_area = st.slider('Floor Area SQM:', min_value=20, max_value=500, value=65,step=15, help='Total Estimated space measured in square meters. Minimum value 20 sqm and maximum is 500 sqm.',)
+        floor_area = st.slider('Floor Area SQM:', min_value=20, max_value=500, value=65, help='Total Estimated space measured in square meters. Minimum value 20 sqm and maximum is 500 sqm.',)
         floor = st.selectbox('Select number of floors:', floor_option, index=None, help="Estimated number of floors.", placeholder="Estimated number of floors.")
         if floor ==3:
             floor_no_option = [number for number in range(3,52,3)]
         else:
             floor_no_option = [number for number in range(5,52,5)]
         floor_level = st.selectbox('Select top floor level: ', floor_no_option, index=None, help="Estimated range of floors.", placeholder="Estimated range of floors.")
-    
+        
+        def check_conditions():
+            return(
+                town is not None and
+                flat_type is not None  and
+                flat_model is not None and
+                lease_year is not None and
+                floor_area > 0 and floor_area < 10000  and
+                floor  is not None and
+                floor_level is not None
+            )
+            
+            
+            
+           
         st.write(' ')
         st.write(' ')
-        button = st.button('Predict Flat Price!')
+        button = st.button('Predict Flat Price!') if check_conditions() else st.markdown(texts,unsafe_allow_html=True)
     
     
     remaining_lease_year = lease_year + 99 - date.today().year if lease_year is not None else None
@@ -175,7 +225,9 @@ if selected == "Genie":
 
 
 
-
+    # year1 = st.number_input('anasnd ')
+    # remaining_lease_year = lease_year + 99 - year1 if lease_year is not None else None
+    #remaining_lease_year = st.number_input('remaining_lease_year ')
 
     town=town_mapping[town] if town is not None else None
     year=year_mapping[date.today().year]
@@ -188,29 +240,57 @@ if selected == "Genie":
     
     
     location_specifics = floor_area_box * town if None not in (floor_area_box, town) else None
-    #floor_area_year = floor_area_box / remaining_lease_year
-    st.write(lease_year)
+    #floor_area_year = floor_area_box / remaining_lease_yearj
+    
     age = year - lease_year if None not in (year, lease_year) else None
     flat_area = flat_type * floor_area_box if None not in (flat_type, floor_area_box) else None
     model_area = flat_model * floor_area_box if None not in (flat_model, floor_area_box) else None
     town_mean_price = town_median_list[town] if None not in (town, town_median_list) else None
-    floor_area_age = floor_area_box / (2024 - lease_year) if None not in (floor_area_box, lease_year) else None
+    # st.write(lease_year)
+    floor_area_age = floor_area_box * (2024 - remaining_lease_year) if None not in (floor_area_box, lease_year) else None
     floor_weightage = (floor_level -  floor ) * floor_area_box if None not in (floor_level, floor) else None
-
+    
+    
+    # def scale_conditions():
+    #         return(
+    #             town is not None and
+    #             flat_type is not None  and
+    #             flat_model is not None and
+    #             lease_year is not None and
+    #             floor_area > 0 and floor_area < 600  and
+    #             floor  is not None and
+    #             remaining_lease_year is not None and 
+    #             year > 0 and
+    #             floor_area_box > 0 and
+    #             location_specifics > 0 and 
+    #             floor_level is not None and
+    #             age > 0 or age is not None and
+    #             flat_area > 0 and
+    #             model_area > 0 and
+    #             town_mean_price > 0 and
+    #             floor_area_age > 0 and
+    #             floor_weightage > 0                
+    #         )
+    
+    # year=year1
     
     data = np.array([[lease_year,floor,year,floor_area_box,town, flat_type, flat_model,remaining_lease_year,location_specifics,age,flat_area,model_area,town_mean_price,floor_area_age,floor_weightage]])
     st.write(data)
+    # scaled_data = scale_reg.transform(data)
+    # st.write(scaled_data)
     
     
 
-    if button and data is not None:
+    
+    if button and (0 or None not in data):
         
-        scaled_data = scale_reg.transform(data)
+        scaled_data = scale_reg.transform(data)   
         st.write(scaled_data)
         prediction = XGB_model.predict(scaled_data)
         st.write(prediction)
         lambda_val = lambda_dict['resale_price_lambda'] 
         transformed_predict=reverse_boxcox_transform(prediction, lambda_val) if data is not None else None
         rounded_prediction = round(transformed_predict[0],2)
-        st.success(f"Based on the input, the Genie's price is,  {rounded_prediction:,.2f}")
-        st.info(f"On average, Genie's predictions are within approximately 3-4% of the actual market prices.")
+        st.success(f"Based on the input, the Genie's predicted price is,  {rounded_prediction:,.2f}")
+        st.info(f"On average, Genie's predictions are within approximately 10 to 20% of the actual market prices.")
+        
