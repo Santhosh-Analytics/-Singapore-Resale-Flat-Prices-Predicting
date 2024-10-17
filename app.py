@@ -275,7 +275,7 @@ if selected == "Genie":
     # year=year1
     
     data = np.array([[lease_year,floor,year,floor_area_box,town, flat_type, flat_model,remaining_lease_year,location_specifics,age,flat_area,model_area,town_mean_price,floor_area_age,floor_weightage]])
-    st.write(data)
+    # st.write(data)
     # scaled_data = scale_reg.transform(data)
     # st.write(scaled_data)
     
@@ -285,9 +285,9 @@ if selected == "Genie":
     if button and (0 or None not in data):
         
         scaled_data = scale_reg.transform(data)   
-        st.write(scaled_data)
+        # st.write(scaled_data)
         prediction = XGB_model.predict(scaled_data)
-        st.write(prediction)
+        # st.write(prediction)
         lambda_val = lambda_dict['resale_price_lambda'] 
         transformed_predict=reverse_boxcox_transform(prediction, lambda_val) if data is not None else None
         rounded_prediction = round(transformed_predict[0],2)

@@ -1,0 +1,14 @@
+PP/   
+pp/
+.git
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
+Singapore_env/
+singapore_env/
+./singapore_env
+/singapore_env
+singapore_env
+

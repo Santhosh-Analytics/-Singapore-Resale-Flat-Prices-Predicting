@@ -1,4 +1,4 @@
-name: singapore_env
+name: /run/media/E_Drive/Technology/Python Project/Capstone/Singapore-Resale-Flat-Prices-Predicting/singapore_env
 channels:
   - conda-forge
   - defaults
@@ -25,4 +25,4 @@ dependencies:
   - imbalanced-learn
   - category_encoders
   - seaborn
-prefix: singapore_env
+prefix: /run/media/E_Drive/Technology/Python Project/Capstone/Singapore-Resale-Flat-Prices-Predicting/singapore_env
